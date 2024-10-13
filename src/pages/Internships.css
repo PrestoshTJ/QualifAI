@@ -1,0 +1,115 @@
+
+.internship-preferences form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .internship-preferences form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .internship-preferences form div {
+    margin-bottom: 15px;
+  }
+  
+  .internship-preferences label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .internship-preferences input[type="text"],
+  .internship-preferences select {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .internship-preferences button[type="submit"] {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .internship-preferences button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .internship-preferences p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .internship-preferences ul {
+    list-style: none;
+    padding: 0;
+    max-width: 65%;
+  }
+  
+  .internship-preferences li {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .internship-preferences li h4 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .internship-preferences li p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .internship-preferences a {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .internship-preferences a:hover {
+    background-color: #218838;
+  }
+
+.apply-now{
+    cursor: pointer;
+}
+  
+
+.internship-folder{
+    display: flex;
+    justify-content: center;
+}
+
+.flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex input{
+  height: 50%;
+}

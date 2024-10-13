@@ -1,0 +1,221 @@
+/* .box{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: aliceblue;
+    border: 1px solid;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+header {
+    background-color: whitesmoke;
+    color: black;
+    padding: 20px;
+    text-align: center;
+
+}
+
+header h1 {
+    font-size:24px;
+    margin-bottom: 10px;
+}
+
+main {
+    padding:20px;
+}
+
+
+
+a{
+    text-decoration: none;
+}
+
+
+  .hero {
+    background-image: linear-gradient(to bottom, #f7f7f7, #fff);
+    padding: 50px;
+    text-align: center;
+  }
+  
+  .hero h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    width: 250px;
+    transition: box-shadow 0.3s;
+  }
+  
+  .box:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .testimonials {
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .testimonials h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  } */
+  .home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+  }
+  
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+
+  .hero-title {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .hero-text {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .features-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+  
+
+  .feature-title {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+ 
+.feature-box{
+    background-color: #485662;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1; /* Allow boxes to grow equally */
+    min-height: 250px; /* Set a minimum height for uniformity */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 2.5rem;
+}
+
+.feature-header {
+    background-color: #485662;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+
+.feature-icon {
+    text-align: center;
+    font-size: 40px;
+    color: #337ab7; /* Color of the icon */
+    margin: 15px 0;
+}
+
+.feature-text {
+    color: #c6d8d0;
+    font-size: 20px;
+    margin: 10px 0 0;
+    text-align: center;
+}
+
+.feature-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit color from parent */
+    transition: transform 0.2s;
+}
+
+.feature-link:hover {
+    transform: scale(1.05);
+}
+
+/* Hero Section */
+.hero-section {
+    background-image: linear-gradient(to bottom, #f0f8ff, #e6f7ff);
+    padding: 50px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mission {
+  background-color: #485662;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 45px; /* Increased padding for a more spacious feel */
+  max-width: 1200px;
+  margin: 20px auto;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  color: #ffffff; /* Ensure text is readable */
+}
+
+.mission h1 {
+  font-size: 2em; /* Larger title */
+  margin-bottom: 15px; /* Space below the title */
+}
+
+.mission p {
+  font-size: 1.2em; /* Larger body text for readability */
+  line-height: 1.5; /* Improved line spacing */
+}
+
+footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background-color: aquamarine;
+  color: black;
+} 
