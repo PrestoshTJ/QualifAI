@@ -18,7 +18,7 @@ const Home = () => {
       <section className="hero-section">
         <h2 className="hero-title">Find your dream job or perfect your resume!</h2>
         <p className="hero-text">Explore our features to get started.</p>
-        <button onClick = {scrollTo}> Explore feature </button>
+        <button className = "vbtn" onClick = {scrollTo}> Explore features </button>
       </section>
       <section ref = {myElementref} className="features-section">
         <div className="feature-grid">

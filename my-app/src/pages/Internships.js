@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { magnitude } from 'simple-statistics';
+import { dot, norm } from 'mathjs';
+
+
 
 import "./Internships.css";
 const Internship = () => {
@@ -14,19 +18,63 @@ const Internship = () => {
     const [startingIndex, setStartingIndex] = useState(0)
     const [formText, setFormText] = useState("Save Preferences")
     const [reccomendations, setReccomendations] = useState(null)
+    const [similarity, setSimilarity] = useState(null)
+
+    const vectorize = (text) => {
+        const words = text.split(/\W+/).filter(Boolean)
+        const wordCount = {}
+  
+        words.forEach(word => {
+            wordCount[word.toLowerCase()] = (wordCount[word.toLowerCase()] || 0) + 1
+        })
+
+        return Object.values(wordCount)
+    }
+
+    const cosineSimilarity = (text1, text2) => {
+        const vec1 = vectorize(text1)
+        const vec2 = vectorize(text2)
+        
+        const maxLength = Math.max(vec1.length, vec2.length)
+        
+        const paddedVec1 = [...vec1, ...Array(maxLength - vec1.length).fill(0)]
+        const paddedVec2 = [...vec2, ...Array(maxLength - vec2.length).fill(0)]
+        
+        const dotProduct = dot(paddedVec1, paddedVec2)
+        const magnitude1 = norm(paddedVec1)
+        const magnitude2 = norm(paddedVec2)
+        
+        return dotProduct / (magnitude1 * magnitude2)
+      };
 
     const reccomender = (data) => {
-
+        let user = "Computer Science"
+        let jobKey = ""
+        let sim = 0
+        let simArray = []
+        data.forEach((job) => {
+            jobKey = job.keyword
+            sim = cosineSimilarity(user, jobKey)
+            simArray.push(sim)
+        })
+        let updatedData = data.map((job, index) => ({
+            ...job,
+            sim: simArray[index]
+        }))
+        updatedData = updatedData.sort((a, b) => b.sim - a.sim);
+        return updatedData
     }
+
+
 
     useEffect(() => {
         fetch('http://localhost:3000/api/internships')
         .then(response => response.json())
         .then(data=>{
-            console.log(data)
+            data = reccomender(data)
             setJoblistings(data);
             setfilteredJoblistings(data);
-            console.log(Joblistings.length)
+            console.log(data)
         })
         .catch(error=>console.error("Error fetching data:",error));
     },[]);
@@ -145,16 +193,21 @@ const Internship = () => {
     <div className = "internship-folder">
         <ul>
             {filteredJoblistings.slice(startingIndex, startingIndex + 10).map((job) => (
-                <li key={job.id}>
-                    <h4>{job.title}</h4>
-                    <p>Company: {job.company_name}</p>
-                    <p>Job title: {job.job_title}</p>
-                    <p>Location: {job.location}</p>
-                    <p>Job Category: {job.keyword}</p>
-                    <p>Job Type: {job.employment_type}</p>
-                    <p>Experience Level: {job.experience_level}</p>
-                    <a className = "apply-now" href={"https://www.linkedin.com/jobs/view/" + job.job_id} target="_blank" rel="noopener noreferrer">Apply Now</a>
-                </li>
+                <div>
+                    <li key={job.id}>
+                        <h4>{job.title}</h4>
+                        <p>Company: {job.company_name}</p>
+                        <p>Job title: {job.job_title}</p>
+                        <p>Location: {job.location}</p>
+                        <p>Job Category: {job.keyword}</p>
+                        <p>Job Type: {job.employment_type}</p>
+                        <p>Experience Level: {job.experience_level}</p>
+                        <a className = "apply-now" href={"https://www.linkedin.com/jobs/view/" + job.job_id} target="_blank" rel="noopener noreferrer">Apply Now</a>
+                    </li>
+                    <div>
+                        <h1> {Math.round(job.sim * 100,5)}% Compatability </h1>
+                    </div>
+                </div>
             ))}
         </ul>
     </div>

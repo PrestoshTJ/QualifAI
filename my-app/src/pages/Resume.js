@@ -6,6 +6,8 @@ import axios from "axios";
 import "./Resume.css";
 import { Document, Page } from '@react-pdf/renderer'
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`; 
+const resumeKey = process.env.REACT_APP_Resume_Key
+console.log(resumeKey)
 
 const Resume = () => {
     const [resume, setResume] = useState(null);
