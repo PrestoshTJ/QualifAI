@@ -13,6 +13,12 @@ export default function Navbar() {
                     <a href = "/jobs"> Jobs </a>
                 </li>
                 <li>
+                    <a href = "/interview"> Interview Stage </a>
+                </li>
+                <li>
+                    <a href = "/user"> User </a>
+                </li>
+                <li>
                     <a href = "/resources"> Resources </a>
                 </li>
             </ul>

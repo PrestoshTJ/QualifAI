@@ -11,10 +11,6 @@ import Resources from './pages/Resource'
 
 function App() {
 
-  const grabImage = () => {
-
-  }
-
   let component
   switch (window.location.pathname) {
     case "/":
@@ -26,9 +22,17 @@ function App() {
     case '/jobs':
       component = <Internships />
       break
+    case '/interview':
+      component = <Internships />
+      break
     case '/resources':
       component = <Resources />
       break
+    case '/user':
+      component = <Resources />
+    default:
+      component = <Resources />
+
   }
 
   return (

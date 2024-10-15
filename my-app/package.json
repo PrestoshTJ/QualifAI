@@ -6,7 +6,9 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "dotenv": "^16.4.5",
     "mammoth": "^1.8.0",
+    "mongoose": "^8.7.1",
     "pdfjs-dist": "^4.7.76",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -16,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:proxy":"react-scripts start && node src/setupProxy.js",
+    "start:proxy": "react-scripts start && node src/setupProxy.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
