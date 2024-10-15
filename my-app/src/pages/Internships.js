@@ -13,11 +13,17 @@ const Internship = () => {
     const [error,setError] = useState(null);
     const [startingIndex, setStartingIndex] = useState(0)
     const [formText, setFormText] = useState("Save Preferences")
+    const [reccomendations, setReccomendations] = useState(null)
+
+    const reccomender = (data) => {
+
+    }
 
     useEffect(() => {
         fetch('http://localhost:3000/api/internships')
         .then(response => response.json())
         .then(data=>{
+            console.log(data)
             setJoblistings(data);
             setfilteredJoblistings(data);
             console.log(Joblistings.length)

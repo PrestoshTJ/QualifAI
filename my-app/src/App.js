@@ -6,6 +6,7 @@ import Internships from './pages/Internships';
 import Home from './pages/home'
 import Navbar from './pages/navbar'
 import Resources from './pages/Resource'
+import None from './pages/none'
 
 // This is the home page
 
@@ -30,8 +31,10 @@ function App() {
       break
     case '/user':
       component = <Resources />
+      break
     default:
-      component = <Resources />
+      component = <None />
+      break
 
   }
 

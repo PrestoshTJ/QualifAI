@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "QualifAI",
+			"path": "../../.."
+		},
+		{
+			"name": "backend",
+			"path": "../../../../../../Downloads/backend"
+		}
+	],
+	"settings": {}
+}

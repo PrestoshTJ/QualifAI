@@ -1,8 +1,15 @@
 
-import React from 'react';
+import React, {useRef} from 'react';
 import './home.css';
 
-export default function Home() {
+const Home = () => {
+  const myElementref = useRef(null)
+  const scrollTo = () => {
+    myElementref.current.scrollIntoView({
+      behavior: 'smooth', 
+      block: 'start',     
+    });
+  }
   return (
     <div className="home-container">
       <header className="header">
@@ -11,8 +18,9 @@ export default function Home() {
       <section className="hero-section">
         <h2 className="hero-title">Find your dream job or perfect your resume!</h2>
         <p className="hero-text">Explore our features to get started.</p>
+        <button onClick = {scrollTo}> Explore feature </button>
       </section>
-      <section className="features-section">
+      <section ref = {myElementref} className="features-section">
         <div className="feature-grid">
           <a href="/resume" className="feature-link">
             <div className="feature-box">
@@ -77,3 +85,4 @@ export default function Home() {
   );
 }
 
+export default Home

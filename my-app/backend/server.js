@@ -7,7 +7,7 @@ require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
-const url = process.env.REACT_APP_MONGODB_URI
+const url ="mongodb+srv://admins:57J6o1uyZUJ2VdJG@cluster0.9rig3.mongodb.net/LinkedInWebscraper?retryWrites=true&w=majority"
 console.log(url)
 // Connect to MongoDB using async/await
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
