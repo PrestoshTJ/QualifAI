@@ -19,41 +19,44 @@ const Internship = () => {
     const [formText, setFormText] = useState("Save Preferences")
     const [reccomendations, setReccomendations] = useState(null)
     const [similarity, setSimilarity] = useState(null)
+    const [uploading, setUploading] = useState(true)
 
-    const vectorize = (text) => {
+    const vectorize = (text, vocabulary) => {
         const words = text.split(/\W+/).filter(Boolean)
         const wordCount = {}
   
         words.forEach(word => {
-            wordCount[word.toLowerCase()] = (wordCount[word.toLowerCase()] || 0) + 1
+            const lowerWord = word.toLowerCase()
+            wordCount[lowerWord] = (wordCount[lowerWord] || 0) + 1
         })
-
-        return Object.values(wordCount)
+        const vector = vocabulary.map(word => wordCount[word.toLowerCase()] || 0)
+        return vector
     }
 
     const cosineSimilarity = (text1, text2) => {
-        const vec1 = vectorize(text1)
-        const vec2 = vectorize(text2)
-        
-        const maxLength = Math.max(vec1.length, vec2.length)
-        
-        const paddedVec1 = [...vec1, ...Array(maxLength - vec1.length).fill(0)]
-        const paddedVec2 = [...vec2, ...Array(maxLength - vec2.length).fill(0)]
-        
-        const dotProduct = dot(paddedVec1, paddedVec2)
-        const magnitude1 = norm(paddedVec1)
-        const magnitude2 = norm(paddedVec2)
-        
-        return dotProduct / (magnitude1 * magnitude2)
-      };
+        const words1 = text1.split(/\W+/).filter(Boolean)
+        const words2 = text2.split(/\W+/).filter(Boolean)
+        const vocabulary = Array.from(new Set([...words1.map(word => word.toLowerCase()), ...words2.map(word => word.toLowerCase())]))
+
+        const vec1 = vectorize(text1, vocabulary)
+        const vec2 = vectorize(text2, vocabulary)
+    
+        const dotProduct = dot(vec1, vec2)
+        const magnitude1 = norm(vec1)
+        const magnitude2 = norm(vec2)
+
+        let result = dotProduct / (magnitude1 * magnitude2)
+        result = result ** (1/10)
+        return result
+    }
 
     const reccomender = (data) => {
-        let user = "Computer Science"
+        let user = "Computer Science. Front-end development. React, HTML/CSS, Javascript/Typescript, Python, AI, Machine learning. Internship"
         let jobKey = ""
         let sim = 0
         let simArray = []
         data.forEach((job) => {
-            jobKey = job.keyword
+            jobKey = job.description
             sim = cosineSimilarity(user, jobKey)
             simArray.push(sim)
         })
@@ -71,6 +74,8 @@ const Internship = () => {
         fetch('http://localhost:3000/api/internships')
         .then(response => response.json())
         .then(data=>{
+            setUploading(false)
+            console.log(data)
             data = reccomender(data)
             setJoblistings(data);
             setfilteredJoblistings(data);
@@ -79,46 +84,6 @@ const Internship = () => {
         .catch(error=>console.error("Error fetching data:",error));
     },[]);
     
-    //handle from submission
-    const handlesubmit = (e) => {
-        if (formText == "Save Preferences") {
-            setFormText("Reset")
-        } else {
-            setFormText("Save Preferences")
-        }
-        if (Joblistings != filteredJoblistings) {
-            setfilteredJoblistings(Joblistings)
-            return
-        } else {
-            e.preventDefault();
-            e.preventDefault();
-            console.log(preferences)
-            let update = Joblistings
-            if (preferences.careerGoals != "No-preference" && preferences.careerGoals != "") {
-                update = update.filter(job => job.keyword === preferences.careerGoals)
-                setfilteredJoblistings(update)
-                console.log(filteredJoblistings)
-            }
-            if (preferences.location != "") {
-                update = update.filter(job => job.location.toLowerCase().includes(preferences.location.toLowerCase()))
-            }
-            if (preferences.jobType != "No-preference" && preferences.jobType != "") {
-                update = update.filter(job => job.employment_type === preferences.jobType)
-            }
-            if (preferences.experienceLevel != "No-preference" && preferences.experienceLevel != "" ) {
-                update = update.filter(job => job.experience_level === preferences.experienceLevel)
-
-            }
-            setfilteredJoblistings(update)
-        }
-
-    };
-    //handle input changes
-    const handleChange = (e) => {
-        const {name, value} =e.target;
-        setPreferences({...preferences, [name]:value});
-    };
-
     const handleIndex = (page) => {
         let newIndex = (page - 1) * 10
         setStartingIndex(newIndex)
@@ -133,63 +98,13 @@ const Internship = () => {
 
     return(
         <div className="internship-preferences">
-    <h2>Job Preferences</h2>
-    <form onSubmit={handlesubmit}>
-        <div>
-            <label>Career Goals:</label>
-            <select name="careerGoals" defaultValue={preferences.careerGoals} onChange={handleChange}>
-                <option value = "No-preference"> No preference </option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Business-Administration">Business Administration</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Graphic-Design">Graphic Design</option>
-                <option value="Data-Science">Data Science</option>
-                <option value="Information-Technology">Information Technology</option>
-                <option value="Communications">Communications</option>
-                <option value="Finance">Finance</option>
-                <option value="Environmental-Science">Environmental Science</option>  
-            </select>
-        </div>
-
-        <div>
-            <label>Location:</label>
-            <input
-                type='text'
-                name='location'
-                value={preferences.location}
-                onChange={handleChange}
-                placeholder="Preferred location (e.g., New York"
-            />
-        </div>   
-
-        <div>
-            <label>Job Type:</label>
-            <select name="jobType" defaultValue={preferences.jobType} onChange={handleChange}>
-                <option value = "No-preference">No preference</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>    
-            </select>
-        </div>
-
-        <div>
-            <label> Experience Level: </label>
-                <select name = "experienceLevel" value = {preferences.experienceLevel} onChange = {handleChange}>
-                    <option value = "No-preference">No preference</option>
-                    <option value = "Internship">Internship</option>
-                    <option value = "Entry level">Entry level</option>
-                    <option value = "Associate">Associate</option>
-                    <option value = "Mid-Senior level">Mid-Senior level</option>
-                    <option value = "Director">Director</option>
-                    <option value = "Executive">Executive</option>
-                </select>
-        </div>
-
-        <button type="submit"> {formText}</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-    </form>
 
     <h3>Available Jobs</h3>
+    {uploading && (
+                <div>
+                    <img src = "giphy.gif"></img>
+                </div>
+            )}
     <div className = "internship-folder">
         <ul>
             {filteredJoblistings.slice(startingIndex, startingIndex + 10).map((job) => (
@@ -199,7 +114,6 @@ const Internship = () => {
                         <p>Company: {job.company_name}</p>
                         <p>Job title: {job.job_title}</p>
                         <p>Location: {job.location}</p>
-                        <p>Job Category: {job.keyword}</p>
                         <p>Job Type: {job.employment_type}</p>
                         <p>Experience Level: {job.experience_level}</p>
                         <a className = "apply-now" href={"https://www.linkedin.com/jobs/view/" + job.job_id} target="_blank" rel="noopener noreferrer">Apply Now</a>
