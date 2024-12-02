@@ -6,7 +6,7 @@ import axios from "axios";
 import "./Resume.css";
 import { Document, Page } from '@react-pdf/renderer'
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js`; 
-const resumeKey = process.env.REACT_APP_Resume_Key
+const resumeKey = process.env.REACT_APP_RESUME_KEY
 console.log(resumeKey)
 
 const Resume = () => {
@@ -133,15 +133,27 @@ const Resume = () => {
               messages: [{ role: 'user', content: textContent }],
             }, {
               headers: {
-                // We understand it is bad practice to share API key but for the sake of simplicity in this competition, we will leave it for your convienience in running
-                'Authorization': `Bearer sk-ODA-WnfwkxlA2KxJ_ym0BNBWSobETVtdyp8VKPPZv2T3BlbkFJAsiDWLa0M-Cxcqevzru2I0iE2YESU5yqKXVWwHn2AA`, 
+                'Authorization': `Bearer ` + resumeKey, 
                 'Content-Type': 'application/json',
               },
             })
-            const botResponse = response.data.choices[0].message.content
+            let botResponse = response.data.choices[0].message.content
+            botResponse = botResponse
+                .replace(/^####\s(.+)$/gm, '<h4>$1</h4>')
+                .replace(/^###\s(.+)$/gm, '<h3>$1</h3>')
+                .replace(/^##\s(.+)$/gm, '<h2>$1</h2>')
+                .replace(/^#\s(.+)$/gm, '<h1>$1</h1>')
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^\d+\.\s(.+)$/gm, '<li>$1</li>')
+                .replace(/(<li>.+<\/li>)(?!\n<li>)/gms, '<ol>$1</ol>')
+                .replace(/^- (.+)$/gm, '<li>$1</li>')
+                .replace(/(<li>.+<\/li>)(?!\n<li>)/gms, '<ul>$1</ul>')
+                .replace(/^\s*$/gm, '<br>')
+                .replace(/(.+?)(?=(<h|<ul>|<ol>|<br>|\n|$))/g, (match, p1) => !/^<.+>$/.test(p1.trim()) ? p1.trim() + '<br>' : p1);
             setMessages([{ text: botResponse, type: 'bot' }])
             setShowMessages(true)
         } catch (error) {
+            console.log(error)
             console.error("Error fetching data")
             setMessages([{ text: "Error fetching data", type: 'user' }])
         }
@@ -229,12 +241,15 @@ const Resume = () => {
             )}
             {messages && messages.length > 0 && showMessages && (
                 <div>
-                    {messages.map((msg, index) => (
-                        <div className = "AITextbox" key={index}>
-                            <strong>{msg.type === 'user' ? 'You' : 'QualifAI bot'}:</strong> {msg.text}
-                        </div>
-                    ))}
-                </div>
+                {messages.map((msg, index) => (
+                    <div className="AITextbox" key={index}>
+                        <strong>{msg.type === 'user' ? 'You' : 'QualifAI bot'}:</strong>
+                        <div 
+                            dangerouslySetInnerHTML={{ __html: msg.text }} 
+                        />
+                    </div>
+                ))}
+            </div>
             )}
             {resume && showVerification && (
                 <div className = "verification-screen">

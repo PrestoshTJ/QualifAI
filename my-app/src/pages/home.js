@@ -12,15 +12,15 @@ const Home = () => {
   }
   return (
     <div className="home-container">
-      <header className="header">
-        <h1 className="title">Check out the amazing features of QualifAI!</h1>
-      </header>
       <section className="hero-section">
         <h2 className="hero-title">Find your dream job or perfect your resume!</h2>
         <p className="hero-text">Explore our features to get started.</p>
         <button className = "vbtn" onClick = {scrollTo}> Explore features </button>
       </section>
-      <section ref = {myElementref} className="features-section">
+      <header ref = {myElementref} className="header">
+        <h1 className="title">Check out the amazing features of QualifAI!</h1>
+      </header>
+      <section className="features-section">
         <div className="feature-grid">
           <a href="/resume" className="feature-link">
             <div className="feature-box">
